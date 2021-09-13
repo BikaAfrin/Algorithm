@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+//Time Complexity - O(fqrt(n)) #include<bits/stdc++.h>
 using namespace std;
 #define optimize() ios_base::sync_with_stdio(0);
 #define F(i,l,r) for(int i=l;i<r;i++)
