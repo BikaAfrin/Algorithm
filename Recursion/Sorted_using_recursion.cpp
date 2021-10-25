@@ -21,4 +21,4 @@ int main()
     int n=6;
     if(fun(arr,n)){cout<<"SORTED\n";}
     else {cout<<"NOT SORTED\n";}
-}//Sorted_using_recursion.cpp
+}
