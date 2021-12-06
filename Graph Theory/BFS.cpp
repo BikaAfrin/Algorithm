@@ -2,11 +2,11 @@
 #include<vector>
 #include<queue>
 #define ll long long
-#define N 8
+#define N 6
 using namespace std;
 
-vector<int>adj[N];
-int vis[N];
+vector<int>adj[N+1];
+int vis[N+1];
 
 void BFS(int node)
 {
@@ -39,7 +39,7 @@ int main()
         adj[a].push_back(b);
         adj[b].push_back(a);
     }
-    for(int i=0;i<N;i++)
+    for(int i=1;i<=N;i++)
     {
         if(!vis[i])
         {
