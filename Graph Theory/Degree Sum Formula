@@ -1,0 +1,21 @@
+//NUMBER OF DEGREE= 2*number of edge
+
+#include<bits/stdc++.h>
+using namespace std;
+
+const int n=10e5+9;
+vector<long long int>g[n];
+int main()
+{
+    int v,e,u;
+    cin>>v>>e;
+    u=e;
+    while(u--)
+    {
+        int a,b;
+        cin>>a>>b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    cout<<2*e<<"\n";
+}
