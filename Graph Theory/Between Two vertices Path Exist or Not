@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+const int n=10e5+9;
+vector<long long int>g[n];
+long long int vis[n];
+
+void DFS(int node,int ans)
+{
+    vis[node]=ans;
+    for(auto u:g[node])
+    {
+        if(vis[u]==0)
+        {
+            DFS(u,ans);
+        }
+    }
+}
+int main()
+{
+    int v,e,val,val1;
+    cin>>val>>val1>>v>>e;
+    while(e--)
+    {
+        int a,b;
+        cin>>a>>b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    int ans=0;
+    for(int i=1;i<=v;i++)
+    {
+       if(vis[i]==0)
+       {
+           ans++;
+           DFS(i,ans);
+       }
+    }
+    if(vis[val]==vis[val1]){cout<<"Path Exist\n";}
+    else {cout<<"Path Is Not Exist";}
+}
