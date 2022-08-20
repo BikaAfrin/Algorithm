@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=10e5+9;
+vector<int>adj[N];
+bool vis[N];
+bool ok;
+int col[N];
+
+int DFS(int node)
+{
+    vis[node]=true;
+    for(auto u:adj[node])
+    {
+        if(!vis[u])
+        {
+            col[u]=col[node]^1;
+            DFS(u);
+        }
+        else 
+        {
+            if(col[u]==col[node])
+            {
+                ok=false;
+            }
+        }
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+    int v,e;
+    cin>>v>>e;
+    for(int i=0;i<e;i++)
+    {
+        int a,b;
+        cin>>a>>b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+    ok=true;
+    for(int i=1;i<=v;i++)
+    {
+        if(!vis[i])
+        {
+           DFS(i); 
+        }
+    }
+    if(ok)
+    {
+        cout<<"YES\n";
+    }
+    else
+    {
+        cout<<"NO\n";
+    }
+}
