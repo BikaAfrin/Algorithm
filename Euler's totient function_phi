@@ -31,3 +31,52 @@ Euler totient phi for 6 is = 2
 ------Coprime/Relativly Prime Number
 Two integer are said to be relatively prime number if the greatest common divisor for them is 1.
 Ex: (8,5)
+
+----------------------------------------------------------ANOTHER ONE---------------------------------------------------------
+
+#include<bits/stdc++.h>
+using namespace std;
+
+using ull=unsigned long long;
+const int N=5000005;
+ull phi[N];
+#define opetimize ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+
+void eulerPhi() {
+    for(int i=0; i<=N; i++) {
+        phi[i] = i;
+    }
+    for(int i=2; i<=N; i++) {
+        if(phi[i] == i) { 
+            // if i is prime
+            // ith phi will be i-1 
+            // multiply all the multiples of i with (1-1/i)
+            phi[i] = i-1;
+            for(int j=2*i; j<=N; j+=i) {
+                phi[j] = (phi[j]*(i-1))/i;
+            }
+        } 
+    }
+    //Apply prefix sum
+    for(int i = 1; i <= N; i++) {
+        phi[i] = phi[i] + phi[i - 1];
+    }
+}
+int main()
+{
+    opetimize;
+    eulerPhi();
+    int t; cin>>t;
+    for(int k=1;k<=t;k++)
+    {
+        ull a,b,ans;
+        cin>>a>>b;
+        ans = phi[b] - phi[a - 1];
+        cout << "Summation of Euler totient phi for " << a << " - "<< b <<" is = " << ans << "\n";
+    }
+}
+
+
+Summation of Euler totient phi for 6 - 6 is = 2
+Summation of Euler totient phi for 8 - 8 is = 4
+Summation of Euler totient phi for 2 - 20 is = 127
