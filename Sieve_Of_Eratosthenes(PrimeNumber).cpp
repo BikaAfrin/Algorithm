@@ -1,30 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define N 20
+#define optimize() ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define fraction() cout.unsetf(ios::floatfield); cout.precision(6); cout.setf(ios::fixed,ios::floatfield);
+#define int long long
+const int MAX=1e8+123;
 
-int arr[N+1];
-vector<bool>Prime(N+1,true);
+vector<int>Prime;
+bitset<MAX>Is_Prime;
 
 void Sieve()
 {
-    Prime[1]=Prime[0]=false;
-    for(int i=2;i*i<=N;i++)
+    for(int i=3;i<MAX;i+=2) Is_Prime[i]=true;
+
+    for(int i=3;i*i<MAX;i+=2)
     {
-        if(Prime[i]==true)
-        {
-           for(int j=i*i;j<=N;j+=i)
+        if(Is_Prime[i]==true)
+         {
+           for(int j=i*i;j<MAX;j+=(i+i))
            {
-               Prime[j]=false;
+               Is_Prime[j]=false;
            }
         }
     }
+
+    Is_Prime[2]=true;
+    Prime.push_back(2);
+
+    for(int i=3;i<=MAX;i+=2){
+        if(Is_Prime[i]==true) Prime.push_back(i);
+    }
+
+    for(auto u:Prime) cout<<u<<" ";
 }
 
-int main()
+int32_t main()
 {
-   Sieve();
-   for(int i=1;i<=N;i++)
-   {
-       if(Prime[i]) { cout<<i<<endl;}
-   }
+    optimize();
+    Sieve();
+
 }
