@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define optimize() ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define ll long long int
+const int MAX=2e5+9;
+
+vector<ll>adj[MAX];
+ll indegree[MAX];
+vector<ll>res;
+ll topo(int n){
+    queue<ll>q;
+    for(ll i=1;i<=n;i++){
+        if(indegree[i]==0){
+            q.push(i);
+        }
+    }
+
+    while(!q.empty()){
+        ll curr=q.front();
+        res.push_back(curr);
+        q.pop();
+        for(auto u:adj[curr]){
+            indegree[u]--;
+            if(indegree[u]==0){
+                q.push(u);
+            }
+        }
+    }
+    for(auto u:indegree){
+        if(u!=0){ return false; }
+    }
+
+    return true;
+
+}
+int main(){
+    optimize();
+    ll n,m;
+    cin>>n>>m;
+    for(ll i=0;i<m;i++){
+        ll a,b;
+        cin>>a>>b;
+        adj[a].push_back(b);
+        indegree[b]++;
+    }
+    if(!topo(n)){
+        cout<<"IMPOSSIBLE\n";
+    }
+    else{
+        for(auto u:res){
+            cout<<u<<" ";
+        }
+    }
+}
