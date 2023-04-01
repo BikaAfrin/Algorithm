@@ -1,0 +1,65 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define optimize() ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define ll long long int
+
+map<string,vector<string>>adj;
+map<string,int>indegree;
+vector<string>res;
+ll topo(int m){
+    queue<string>q;
+    for(auto u:indegree){
+        if(u.second==0){
+            q.push(u.first);
+        }
+    }
+
+    while(!q.empty()){
+        string curr=q.front();
+        res.push_back(curr);
+        q.pop();
+        for(auto u:adj[curr]){
+            indegree[u]--;
+            if(indegree[u]==0){
+                q.push(u);
+            }
+        }
+    }
+    for(auto u:indegree){
+        if(u.second!=0){ return false; }
+    }
+
+    return true;
+
+}
+int main(){
+    optimize();
+    ll t;
+	cin>>t;
+	for(ll i=1;i<=t;i++){
+        ll m;
+        cin>>m;
+        for(ll i=0;i<m;i++){
+            string a,b;
+            cin>>a>>b;
+            adj[a].push_back(b);
+            if(indegree[a]!=0){}
+            else{
+                indegree[a]=0;
+            }
+            indegree[b]++;
+        }
+        if(!topo(m)){
+            cout<<"Case "<<i<<": No\n";
+        }
+        else{
+            cout<<"Case "<<i<<": Yes\n";
+            for(auto u:res){
+                cout<<u<<"\n";
+            }
+        }
+        adj.clear();
+        indegree.clear();
+        res.clear();
+	}
+}
