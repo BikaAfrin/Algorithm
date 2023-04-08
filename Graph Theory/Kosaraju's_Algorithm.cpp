@@ -1,97 +1,79 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+#define optimize() ios_base::sync_with_stdio(false); cin.tie(nullptr);
+#define ll long long int
+const int MAX=2e5+9;
 
-const int MAX = 2e5+9;
-vector< int > adj[MAX], adj_rev[MAX];
-vector<bool>visited;
-vector<int> order, component;
-int SCC=1;
+ll n,m;
+vector<ll>edges[MAX],Topo,edges_r[MAX],component;
+bool V[MAX];
+ll arr[MAX];
+ll SCC=1;
 
-void dfs1(int node){
-    visited[node] = true;
-
-    for(auto child:adj[node]){
-        if(visited[child]==false){
-            dfs1(child);
-
+void dfs1(ll node){
+    V[node]=true ;
+    for(auto u:edges[node]){
+        if(V[u]==false){
+            dfs1(u);
         }
     }
-    order.push_back(node);
-    //cout<<node<<"+";
+    Topo.push_back(node);
 }
 
-void dfs2(int node){
-    visited[node] = true;
-
+void dfs2(ll node){
+    V[node]=true ;
     component.push_back(node);
-    //cout<<node<<"+";
-    for(auto child:adj_rev[node]){
-        if(visited[child]==false){
-            dfs2(child);
+    for(auto u:edges_r[node]){
+        if(V[u]==false){
+            dfs2(u);
         }
     }
 }
 
-int main(){
-    int n, m;
-    cin >> n >> m;
+int main()
+{
+    optimize();
+    cin>>n>>m;
 
-    for(int i=0; i<m; i++){
-        int a, b;
-        cin >> a >> b;
-        adj[a].push_back(b);
-        adj_rev[b].push_back(a);
+    for(ll i=1;i<=n;i++){
+        edges[i].clear();
     }
 
-    visited.assign(n, false);
+    Topo.clear();
 
-    for(int i=1; i<=n; i++){
-        if(visited[i]==false){
+    while(m--){
+        ll a,b;
+        cin>>a>>b;
+        edges[a].push_back(b);
+        edges_r[b].push_back(a);
+    }
+
+    memset(V,false,sizeof(V));
+
+    for(ll i=1;i<=n;i++){
+        if(V[i]==false){
             dfs1(i);
         }
     }
 
-    visited.assign(n, false);
+    memset(V,false,sizeof V);
+    reverse(Topo.begin(),Topo.end());
 
+    for(auto u:Topo){
+        if(V[u]==false){
+            dfs2(u);
 
-    reverse(order.begin(), order.end());
-
-    vector<int> roots(n, 0);
-    vector<int> root_nodes;
-    vector<vector<int>> adj_scc(n);
-
-    for (auto v : order){
-        //cout << v << "\n";
-        if (!visited[v]) {
-            dfs2 (v);
-            int root = component.front();
-            //cout<<root<<"-\n";
-            for (auto u : component) roots[u] = root;
-            root_nodes.push_back(root);
             cout<<"SCC #"<<SCC<<"\n";
+            SCC++;
+
             for(auto u:component){
                 cout<<u<<" ";
             }
-            cout<<"\n";
-            SCC++;
+            cout << endl;
+        }
+        component.clear();
+    }
 
-            component.clear();
-        }
-    }
-    for (int v = 1 ; v <= n; v++){
-        for (auto u : adj[v]) {
-                //cout<<v<<"-"<<u<<"\n";
-            int root_v = roots[v],
-                root_u = roots[u];
-                //cout<<root_v<<" "<<root_u<<"\n";
-            if (root_u != root_v)
-                adj_scc[root_v].push_back(root_u);
-        }
-    }
-    cout << endl;
-    for(int i=1;i<=adj_scc.size();i++){
-        for(auto v:adj_scc[i]){
-            cout<<i<<" "<<v<<"\n";
-        }
-    }
+    return 0;
 }
+
