@@ -20,3 +20,10 @@ int main() {
 
     return 0;
 }
+
+
+It removes consecutive duplicate elements in-place.
+
+It keeps the first occurrence of each element and shifts the rest to the front.
+
+It returns an iterator (pointer) to the element just after the last unique element — which in this example is at index 3.
