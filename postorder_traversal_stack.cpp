@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 // Node structure for the binary tree
 struct Node {
     int data;
@@ -18,20 +19,20 @@ vector<int> postOrder(Node* root) {
     if (root == NULL)
         return {};
 
-    Node* leftn = root;
+    Node* curr = root;
     stack<Node*> st;
     vector<int> postorder;
 
     // Traverse the tree until
     // current node is not null
     // or the stack is not empty
-    while (leftn != NULL || !st.empty()) {
+    while (curr != NULL || !st.empty()) {
         // If current node is not null,
         // push it onto the stack
         // and move to its left child
-        if (leftn != NULL) {
-            st.push(leftn);
-            leftn = leftn->left;
+        if (curr != NULL) {
+            st.push(curr);
+            curr = curr->left;
         } else {
             // If current node is null,
             // check the right child of the
@@ -50,7 +51,7 @@ vector<int> postOrder(Node* root) {
                 postorder.push_back(temp->data);
 
                 // Check if there are more
-                // nodes to pop whose right
+                // nodes to pop whose right 
                 // subtree is also processed
                 while (!st.empty() && temp == st.top()->right) {
                     temp = st.top();
@@ -60,7 +61,7 @@ vector<int> postOrder(Node* root) {
             } else {
                 // If right child exists,
                 // set current node to it
-                leftn = temp;
+                curr = temp;
             }
         }
     }
@@ -102,5 +103,5 @@ int main()
 
     return 0;
 }
-
-
+                            
+                        
